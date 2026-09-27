@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>DSH Meeting Digest</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="logo">MD</div>
+      <div><strong>Meeting Digest</strong><span>Powered by Harness</span></div>
+    </div>
+    <button class="primary block" id="newConversation">＋ 新对话</button>
+    <div class="section-label"><span>对话记录</span></div>
+    <div id="conversationList" class="item-list conversation-list"></div>
+  </aside>
+
+  <main class="main">
+    <header class="main-header">
+      <div>
+        <div class="title-row">
+          <span id="statusDot" class="dot"></span>
+          <h1 id="currentName">未选择会议</h1>
+        </div>
+        <p id="currentDetail">粘贴转录文本或选择已有会议</p>
+      </div>
+      <div class="header-actions">
+        <select id="meetingSelect" class="select"></select>
+        <button class="ghost" id="addMeeting">＋ 摄入转录</button>
+        <button class="ghost danger" id="deleteMeeting">删除</button>
+        <button class="ghost icon-btn" id="toggleTheme" title="切换主题">🌙</button>
+      </div>
+    </header>
+
+    <div id="workspace" class="workspace">
+      <section class="center">
+        <div id="chatMessages" class="chat-scroll"></div>
+        <div class="composer-wrap">
+          <div id="streamStatus" class="stream-status hidden">
+            <span id="streamStatusText"><span class="status-spinner"></span>AI 正在思考</span>
+          </div>
+          <div class="composer">
+            <textarea id="chatInput" rows="1" placeholder="询问会议内容，例如：整理待办和跟进清单"></textarea>
+            <div class="composer-bar">
+              <span class="composer-hint"><kbd>⌘</kbd>+<kbd>↵</kbd> 发送 · 纪要只在本机</span>
+              <div class="composer-actions">
+                <button class="ghost small hidden" id="stopStream">停止</button>
+                <button class="send-btn" id="sendMessage" title="发送">↑</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <aside class="resource-sidebar">
+        <div class="resource-scroll">
+          <div class="resource-header">
+            <b>会议上下文</b>
+            <button class="ghost small" id="refreshResource">刷新</button>
+          </div>
+          <nav class="resource-tabs">
+            <button data-resource-tab="actions" class="active">待办</button>
+            <button data-resource-tab="decisions">决议</button>
+            <button data-resource-tab="topics">话题</button>
+            <button data-resource-tab="followups">跟进</button>
+          </nav>
+          <section class="panel" data-tab="actions">
+            <div class="panel-title"><span>待办清单</span></div>
+            <div id="actionsCard" class="panel-body muted">未选择会议</div>
+          </section>
+          <section class="panel hidden" data-tab="decisions">
+            <div class="panel-title"><span>决议</span></div>
+            <div id="decisionsCard" class="panel-body muted">未选择会议</div>
+          </section>
+          <section class="panel hidden" data-tab="topics">
+            <div class="panel-title"><span>话题结构</span></div>
+            <div id="topicsCard" class="panel-body muted">未选择会议</div>
+          </section>
+          <section class="panel hidden" data-tab="followups">
+            <div class="panel-title"><span>跟进清单</span></div>
+            <div id="followupsCard" class="panel-body muted">未选择会议</div>
+          </section>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <div class="modal hidden" id="meetingModal">
+    <form class="modal-card" id="meetingForm" style="width:560px">
+      <h2>摄入会议转录</h2>
+      <label>标题<input name="title" required placeholder="周三产品周会"></label>
+      <label>转录文本<textarea name="text" required rows="10" style="font:inherit;padding:8px;border:1px solid var(--border);border-radius:8px;background:var(--bg);color:var(--text)" placeholder="张三: 本周要完成支付对账…&#10;李四: 我不同意这个排期…&#10;"></textarea></label>
+      <p class="muted small">格式：每行"发言人: 内容"。纪要只保存在本机 ~/.dsh-java-meeting/。</p>
+      <div class="modal-actions"><button type="button" class="ghost" id="cancelModal">取消</button><button class="primary">保存并分析</button></div>
+    </form>
+  </div>
+  <div id="toast" class="toast"></div>
+  <script src="app.js"></script>
+</body>
+</html>

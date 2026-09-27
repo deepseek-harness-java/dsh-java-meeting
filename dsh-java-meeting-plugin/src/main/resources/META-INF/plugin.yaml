@@ -1,0 +1,6 @@
+id: dsh-java-meeting-plugin
+name: DSH Meeting Digest Plugin
+version: 0.1.0
+author: Xiaofuge
+description: Meeting transcript analysis tools (actions, decisions, topics, follow-ups) for DeepSeek Harness.
+entrypoint: cn.xiaofuge.dsh.meeting.plugin.DshMeetingPlugin
